@@ -579,13 +579,14 @@ docker exec -i -e MYSQL_PWD=123 mysql_alias mysql -uroot -f --table --default-ch
 
 Сделать скриншоты (Win+Shift+S) и положить в корень репозитория:
 
-| Файл | Что снять |
-|---|---|
-| `image.png` | П. 0.2: `docker ps`, контейнер `mysql_alias` запущен |
-| `image-1.png` | П. 0.5: созданные таблицы `customers`, `orders`, `employees` с данными |
-| `image-2.png` | П. 2–3: примеры с алиасами (JOIN, самосоединение, агрегаты) |
-| `image-3.png` | П. 7: пять ошибок и правильные варианты |
-| `image-4.png` | П. 10–11: `my_actions.log` и дамп `alias_dump_clean.sql` |
+<img width="701" height="111" alt="изображение" src="https://github.com/user-attachments/assets/64165ed4-cebb-49a9-990d-c7963833f8d5" />
+<img width="688" height="347" alt="изображение" src="https://github.com/user-attachments/assets/b49783c9-d26c-4660-8546-fb0c1377549a" />
+<img width="683" height="344" alt="изображение" src="https://github.com/user-attachments/assets/66137734-e484-43b3-938c-3353f1a42547" />
+<img width="705" height="346" alt="изображение" src="https://github.com/user-attachments/assets/cfc84949-51f3-4758-8ccb-78fe38b569ea" />
+<img width="690" height="388" alt="изображение" src="https://github.com/user-attachments/assets/8b834270-ab08-44f4-bd71-3a1626f38018" />
+
+
+
 
 ---
 
