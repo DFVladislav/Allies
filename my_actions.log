@@ -1,0 +1,37 @@
+2026-11-18T07:07:25.522430Z	   10 Query	DROP DATABASE IF EXISTS alias_db
+2026-11-18T07:07:25.691213Z	   10 Query	SELECT DATABASE()
+2026-11-18T07:07:25.692659Z	   10 Query	CREATE DATABASE alias_db
+2026-11-18T07:07:25.705699Z	   10 Query	SELECT DATABASE()
+2026-11-18T07:07:25.706130Z	   10 Query	CREATE TABLE customers (
+2026-11-18T07:07:25.779647Z	   10 Query	CREATE TABLE orders (
+2026-11-18T07:07:25.852474Z	   10 Query	CREATE TABLE employees (
+2026-11-18T07:07:25.938910Z	   10 Query	INSERT INTO customers (name, email, city) VALUES
+2026-11-18T07:07:25.993070Z	   10 Query	INSERT INTO orders (customer_id, order_date, amount, status) VALUES
+2026-11-18T07:07:26.004170Z	   10 Query	INSERT INTO employees (name, position, manager_id) VALUES
+2026-11-18T07:07:26.016194Z	   10 Query	SELECT * FROM customers
+2026-11-18T07:07:26.016950Z	   10 Query	SELECT * FROM orders
+2026-11-18T07:07:26.017335Z	   10 Query	SELECT * FROM employees
+2026-11-18T07:07:30.207832Z	   11 Query	SELECT DATABASE()
+2026-11-18T07:07:30.208351Z	   11 Query	SELECT customers.name, orders.order_date, orders.amount
+2026-11-18T07:07:30.209863Z	   11 Query	SELECT c.name, o.order_date, o.amount
+2026-11-18T07:07:30.210364Z	   11 Query	SELECT e.name AS employee, m.name AS manager
+2026-11-18T07:07:30.210859Z	   11 Query	SELECT c.id AS customer_id, o.id AS order_id
+2026-11-18T07:07:30.211440Z	   11 Query	SELECT *
+2026-11-18T07:07:30.212843Z	   11 Query	SELECT name AS customer_name,
+2026-11-18T07:07:30.213375Z	   11 Query	SELECT customer_id,
+2026-11-18T07:07:30.213789Z	   11 Query	SELECT id, amount * 2 AS double_amount
+2026-11-18T07:07:30.214080Z	   11 Query	SELECT id, amount * 2 AS double_amount
+2026-11-18T07:07:30.214413Z	   11 Query	SELECT c.name, o.total
+2026-11-18T07:07:30.215333Z	   11 Query	SELECT c.name,
+2026-11-18T07:07:30.216596Z	   11 Query	SELECT c.name AS customer,
+2026-11-18T07:07:30.218318Z	   11 Query	SELECT customers.name, COUNT(orders.id) AS order_count, SUM(orders.amount) AS total_amount
+2026-11-18T07:07:30.219458Z	   11 Query	SELECT c.name, COUNT(o.id) AS order_count, SUM(o.amount) AS total_amount
+2026-11-18T07:07:34.361936Z	   12 Query	SELECT DATABASE()
+2026-11-18T07:07:34.362486Z	   12 Query	SELECT customers.name
+2026-11-18T07:07:34.363479Z	   12 Query	SELECT amount * 2 AS double_amount FROM orders WHERE double_amount > 1000
+2026-11-18T07:07:34.364032Z	   12 Query	SELECT id FROM customers JOIN orders ON customers.id = orders.customer_id
+2026-11-18T07:07:34.364771Z	   12 Query	SELECT c.name
+2026-11-18T07:07:34.365484Z	   12 Query	SELECT * FROM (SELECT id FROM customers) AS t
+2026-11-18T07:07:34.366023Z	   12 Query	SELECT amount * 2 AS double_amount FROM orders WHERE amount * 2 > 1000
+2026-11-18T07:07:34.366476Z	   12 Query	SELECT c.id, o.id FROM customers c JOIN orders o ON c.id = o.customer_id
+2026-11-18T07:07:34.367019Z	   12 Query	SELECT e.name, m.name FROM employees e JOIN employees m ON e.manager_id = m.id

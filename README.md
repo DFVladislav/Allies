@@ -59,6 +59,15 @@ docker run --name mysql_alias \
 docker ps
 ```
 
+> ⚠️ **Windows + Docker Desktop:** файл `my.cnf`, примонтированный с хоста, виден в контейнере как world-writable (`-rwxrwxrwx`), и MySQL 8.0 игнорирует его с предупреждением `World-writable config file ... is ignored` — `general_log` при этом останется выключенным. Исправление: выставьте права внутри контейнера и перезапустите его:
+>
+> ```bash
+> docker exec mysql_alias chmod 644 /etc/mysql/conf.d/my.cnf
+> docker restart mysql_alias
+> ```
+>
+> После перезапуска проверьте: `docker exec -e MYSQL_PWD=123 mysql_alias mysql -uroot -e "SELECT @@general_log, @@general_log_file;"` — должно быть `1` и `/var/lib/mysql/general.log`.
+
 ### 0.3. Очистка лога перед началом работы
 
 При первом запуске MySQL загружает системные данные (справку, часовые пояса), которые попадут в лог. Чтобы начать с чистого листа:
@@ -541,7 +550,42 @@ cat alias_dump.sql
 
 ---
 
+## 🔹 12. Файлы результата этой работы
+
+- `my.cnf` — конфигурация контейнера с включённым `general_log`.
+- `sql/01_setup.sql` — создание базы `alias_db`, таблиц `customers`, `orders`, `employees` и тестовых данных.
+- `sql/02_alias_examples.sql` — все рабочие примеры с алиасами таблиц и столбцов.
+- `sql/03_errors.sql` — пять типичных ошибок и их правильные варианты.
+- `alias_dump.sql`, `alias_dump_clean.sql` — дампы базы `alias_db`.
+- `my_actions.log` — отфильтрованный журнал только SQL-действий этой работы.
+
+Прогон скриптов (Git Bash, из папки репозитория):
+
+```bash
+docker exec -i -e MYSQL_PWD=123 mysql_alias mysql -uroot --table --default-character-set=utf8mb4 < sql/01_setup.sql
+docker exec -i -e MYSQL_PWD=123 mysql_alias mysql -uroot --table --default-character-set=utf8mb4 < sql/02_alias_examples.sql
+docker exec -i -e MYSQL_PWD=123 mysql_alias mysql -uroot -f --table --default-character-set=utf8mb4 < sql/03_errors.sql
+```
+
+> `-f` нужен только для `03_errors.sql`: клиент продолжит работу после ожидаемых ошибок.
+
+В логе 37 строк — от `DROP DATABASE IF EXISTS alias_db` до запросов из раздела ошибок. Метод фильтрации `grep` из п. 10.3 сохраняет только строки с SQL-запросом (многострочные запросы попадают в лог первой строкой); записи `INSERT INTO help_*`, `time_zone` и `mysql.general_log` отфильтрованы.
+
+---
+
 **Результат оформить в виде отдельного `README.md` со скриншотами результатов ваших действий, дампом и логом (лог-файл должен содержать только ваши действия) в этой же папке и прислать ссылку преподавателю.**
+
+### Скриншоты
+
+Сделать скриншоты (Win+Shift+S) и положить в корень репозитория:
+
+| Файл | Что снять |
+|---|---|
+| `image.png` | П. 0.2: `docker ps`, контейнер `mysql_alias` запущен |
+| `image-1.png` | П. 0.5: созданные таблицы `customers`, `orders`, `employees` с данными |
+| `image-2.png` | П. 2–3: примеры с алиасами (JOIN, самосоединение, агрегаты) |
+| `image-3.png` | П. 7: пять ошибок и правильные варианты |
+| `image-4.png` | П. 10–11: `my_actions.log` и дамп `alias_dump_clean.sql` |
 
 ---
 
